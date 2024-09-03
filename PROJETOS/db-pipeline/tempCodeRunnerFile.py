@@ -1,4 +1,3 @@
-
 import sqlite3
 import os
 import pandas as pd
@@ -33,21 +32,16 @@ def data_clean(df, metadados):
 
 def feat_eng(df):
     '''
-    Função para a criação de novas colunas
-    INPUT: Pandas DataFrame
-    OUTPUT: Pandas DataFrame
+    Função ???????????????????????????
+    INPUT: ???????????????????????????
+    OUTPUT: ???????????????????????????
     '''
-    df["tempo_voo_esperado"] = (df["datetime_chegada_formatted"] - df["datetime_partida_formatted"]) / pd.Timedelta(hours=1)
-    df["tempo_voo_hr"] = df["tempo_voo"] /60
-    df["atraso"] = df["tempo_voo_hr"] - df["tempo_voo_esperado"]
-    df["dia_semana"] = df["data_voo"].dt.day_of_week
-    
-    logger.info(f'Novas colunas adicionadas; {datetime.datetime.now()}')
-    return df
+    #colocar log info
+    pass
 
 def save_data_sqlite(df):
     try:
-        conn = sqlite3.connect("data/NyflightsDB.db")
+        conn = sqlite3.connect("https://raw.githubusercontent.com/JackyP/testing/master/datasets/nycflights.csv")
         logger.info(f'Conexão com banco estabelecida ; {datetime.datetime.now()}')
     except:
         logger.error(f'Problema na conexão com banco; {datetime.datetime.now()}')
@@ -59,7 +53,7 @@ def save_data_sqlite(df):
 
 def fetch_sqlite_data(table):
     try:
-        conn = sqlite3.connect("data/NyflightsDB.db")
+        conn = sqlite3.connect("https://raw.githubusercontent.com/JackyP/testing/master/datasets/nycflights.csv")
         logger.info(f'Conexão com banco estabelecida ; {datetime.datetime.now()}')
     except:
         logger.error(f'Problema na conexão com banco; {datetime.datetime.now()}')
@@ -77,8 +71,8 @@ if __name__ == "__main__":
     df = data_clean(df, metadados)
     print(df.head())
     utils.null_check(df, metadados["null_tolerance"])
-    utils.keys_check(df, metadados["cols_renamed"])
+    utils.keys_check(df, metadados["cols_chaves"])
     df = feat_eng(df)
-    save_data_sqlite(df)
+    #save_data_sqlite(df)
     fetch_sqlite_data(metadados["tabela"][0])
     logger.info(f'Fim da execução ; {datetime.datetime.now()}')

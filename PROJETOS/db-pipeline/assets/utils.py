@@ -1,10 +1,11 @@
+
 import pandas as pd
 import re
 import logging
 import datetime
 
 
-logging.basicConfig(filename='data/flights_pipe_log.log', level=logging.INFO)
+logging.basicConfig(filename='C:/Users/gilbe/OneDrive/Documents/GitHub/learn-python/PROJETOS/db-pipeline/data/flights_pipe_log.log', level=logging.INFO)
 logger = logging.getLogger()
 
 def read_metadado(meta_path):
@@ -96,13 +97,14 @@ def null_check(df, null_tolerance):
             
 def keys_check(df, cols_chaves):
     '''
-    Função ???????????????????????????
-    INPUT: ???????????????????????????
-    OUTPUT: ???????????????????????????
+    Função Validação de chaves
+    INPUT: Pandas DataFrame
+    OUTPUT: 
     '''
-    #colocar log info
-    pass
-
+    if len(df[cols_chaves].drop_duplicates()) == len(df):
+        logger.info(f'Chaves Validadas; {datetime.datetime.now()}')
+    else:
+        logger.error(f"Chaves Inválidas; {datetime.datetime.now()}")
 # Funções auxiliares -------------------------------------------
 
 def padroniza_str(obs):
